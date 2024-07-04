@@ -1,28 +1,39 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { IProducts } from "./types";
+import { Link } from "react-router-dom";
 
-const index = ({title}: IProducts) => {
-  const [counter, setCounter] = useState(0);
-  
-  const handleClick = () => { 
-    setCounter(counter+1);
-   }
-   
-   useEffect(() => {
-    console.log('inside the product cpmt');
-    console.log(title);
-  }, [title]);
-   
-  
+interface IData {
+  body: string;
+  id: number;
+  title: string;
+  userId: number;
+}
+
+const index = () => {
+  const [posts, setPosts] = useState<[]>([]); 
+
+  const fetchingData = () => {
+    axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
+      setPosts(res.data);
+    });
+  };
+
+  console.log(posts);
+
+  useEffect(() => {
+    fetchingData();
+  }, []);
+
   return (
     <>
-    <div className="flex justify-center items-center h-screen">Product</div>
-    <span>
-      {counter}
-    </span>
-    <button onClick={handleClick}>click me</button>
+      {posts.map((item: IData) => (
+        <div key={item.id}>
+          <Link to={`/product/${item.id}`}>{item.title}</Link>
+          <p>{item.title}</p>
+        </div>
+      ))}
     </>
-  )
+  );
 };
 
 export default index;

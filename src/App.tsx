@@ -6,24 +6,19 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Products from "./components/Products";
 import About from "./components/About";
+import ProductItem from "./components/ProductItem";
 
 function App() {
-  const [title, setTitle] = useState<string>("initial title");
-
-  useEffect(() => {
-    console.log(title);
-    setTimeout(() => {
-      setTitle("title is changed")
-    }, 3000);
-  }, []);
   
   return (
     <div className="h-screen flex flex-col justify-between">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/product" element={<Products title={title} />} />
+        <Route path="/product" element={<Products />} />
+        <Route path="/product/:id" element={<ProductItem />} />
         <Route path="/about" element={<About />} />
+
       </Routes>
       <Footer />
     </div>
