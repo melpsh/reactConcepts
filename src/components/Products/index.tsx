@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../../services/Api";
 
 interface IData {
   body: string;
@@ -13,7 +14,7 @@ const index = () => {
   const [posts, setPosts] = useState<[]>([]); 
 
   const fetchingData = () => {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
+    api.get("posts").then((res) => {
       setPosts(res.data);
     });
   };
